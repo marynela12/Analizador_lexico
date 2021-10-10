@@ -1,10 +1,17 @@
 import ply.lex as lex
 
 #1) Lista de palabras reservadas
+#inicio reserved Maribel
 reserved = {
-    'evaluar' : 'EVALUAR',
-    'si' : 'SI'
+    'let' : 'LET',
+    'in' : 'IN' ,
+    'endlet' : 'ENDLET',
+    'if' : 'IF' ,
+    'then' : 'THEN',
+    'else' : 'ELSE' ,
+    'endif':'ENDIF'
     }
+#termina reserved Maribel
 
 # 2) Lista de tokens
 tokens = [
@@ -15,7 +22,22 @@ tokens = [
     'ENTERO',
     'INCREMENTO',  #Se ordenan de mayor longitud a menor si coincide un caracter, por ejem, '+=' e '+'
     'MAS',
-    'COMENTARIO'
+    'COMENTARIO',
+    'IDENTIFICADOR',
+
+    #Inicia tokens Billy
+    'MENOS',
+    'ASIGNACION',
+    'MULTIPLICACION',
+    'DIVISION',
+    'MAYORQ',
+    'MENORQ',
+    'MAYORIGUAL',
+    'MENORIGUAL',
+    'IGUAL',
+    'DIFERENTE'
+    #Termina tokens Billy
+
     
 ] + list(reserved.values())
 
@@ -24,8 +46,16 @@ tokens = [
 #A) Tokens simples, que solo se definen mediante expresiones regulares
 # Inician con el prefijo "t_" seguido del nombre del Token
 
-t_EVALUAR  = r'evaluar' #Se incluyen uno por cada palabra reservada
-t_SI  = r'si'
+#inicio reservada Maribel
+#Se incluyen uno por cada palabra reservada
+t_LET = r'let'
+t_IN = r'in'
+t_ENDLET = r'endlet'
+t_IF = r'if'
+t_THEN = r'then'
+t_ELSE = r'else'
+t_ENDIF = r'endif'
+#termino reservada Maribel
 
 
 t_PTCOMA     = r';'  
@@ -35,6 +65,19 @@ t_INCREMENTO = r'\+='
 t_MAS       = r'\+'
 t_ignore = " \t" #caracteres ignorados: espacio y tabulador
 
+#Inician tokens simples Billy
+t_MENOS = r'\-'
+t_ASIGNACION= r'\='
+t_MULTIPLICACION= r'\*'
+t_DIVISION= r'\/'
+t_MAYORQ= r'\>'
+t_MENORQ= r'\<'
+t_MAYORIGUAL= r'\>='
+t_MENORIGUAL= r'\<='
+t_IGUAL= r'\=='
+t_DIFERENTE= r'\!='
+#Termina tokens simples billy
+
 
 #B) Tokens que requieren una acción
 # Las definiciones de Tokens que requieren otros tipo de acciones se realizan mediante Funciones
@@ -43,6 +86,8 @@ t_ignore = " \t" #caracteres ignorados: espacio y tabulador
 # t.value -> es el lexema
 # t.lineno -> línea en la que se encontró
 # t.lexpos -> posición relativa al inicio del texto
+
+
 def t_DECIMAL(t):
     r'\d+\.\d+' #El punto se tiene que escapar porque en expresiones regulares significa cualqueir símbolo
     try:
@@ -62,6 +107,11 @@ def t_ENTERO(t):
         t.value = 0
     return t #Siempre se debe devolver el objeto t, de lo contrario se descarta el token
 
+
+#def t_IDENTIFICADOR(t):
+  #   r'[a-zA-Z_][a-zA-Z_0-9]*'
+ #    t.type = reservadas.get(t.value.lower(),'IDENTIFICADOR')    # Check for reserved words
+   #  return t
 
 def t_COMENTARIO(t):
     r'%.*' # Una línea que inicia con '#', seguida de lo que una cadena conformada por cualesqueira símbolos
