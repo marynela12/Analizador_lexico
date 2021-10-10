@@ -1,3 +1,9 @@
+# Equipo 
+# Billy Diaz de Luis
+# Maribel Montoya Hernandez
+# Ana Laura Lopez Martinez
+
+
 import ply.lex as lex
 
 #1) Lista de palabras reservadas
