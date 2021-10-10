@@ -108,10 +108,10 @@ def t_ENTERO(t):
     return t #Siempre se debe devolver el objeto t, de lo contrario se descarta el token
 
 
-#def t_IDENTIFICADOR(t):
-  #   r'[a-zA-Z_][a-zA-Z_0-9]*'
- #    t.type = reservadas.get(t.value.lower(),'IDENTIFICADOR')    # Check for reserved words
-   #  return t
+def t_IDENTIFICADOR(t):
+    r'[a-z|_] [a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value,'IDENTIFICADOR')
+    return t
 
 def t_COMENTARIO(t):
     r'%.*' # Una línea que inicia con '#', seguida de lo que una cadena conformada por cualesqueira símbolos
